@@ -4,6 +4,8 @@ import { UserData } from "@/types";
 import UserCard from "./UserCard";
 import StatsContainer from "./StatsContainer";
 import ForkedRepos from "../charts/ForkedRepos";
+import PopularRepos from "../charts/PopularRepos";
+import UsedLanguages from "./UsedLanguages";
 
 type UserProfileProps = {
   userName: string;
@@ -40,7 +42,9 @@ const UserProfile = ({ userName }: UserProfileProps) => {
       />
       {repositories.totalCount > 0 && (
         <div className="grid md:grid-cols-2 gap-4">
+          <UsedLanguages repositories={repositories.nodes} />
           <ForkedRepos repositories={repositories.nodes} />
+          <PopularRepos repositories={repositories.nodes} />
         </div>
       )}
     </div>
