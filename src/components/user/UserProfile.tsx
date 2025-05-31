@@ -1,8 +1,9 @@
-import { useQuery } from '@apollo/client';
-import { GET_USER } from '@/queries';
-import { UserData } from '@/types';
-import UserCard from './UserCard';
-import StatsContainer from './StatsContainer';
+import { useQuery } from "@apollo/client";
+import { GET_USER } from "@/queries";
+import { UserData } from "@/types";
+import UserCard from "./UserCard";
+import StatsContainer from "./StatsContainer";
+import ForkedRepos from "../charts/ForkedRepos";
 
 type UserProfileProps = {
   userName: string;
@@ -14,8 +15,8 @@ const UserProfile = ({ userName }: UserProfileProps) => {
   });
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <h2 className='text-xl'>{error.message}</h2>;
-  if (!data) return <h2 className='text-xl'>User Not Found.</h2>;
+  if (error) return <h2 className="text-xl">{error.message}</h2>;
+  if (!data) return <h2 className="text-xl">User Not Found.</h2>;
 
   const {
     avatarUrl,
@@ -37,6 +38,11 @@ const UserProfile = ({ userName }: UserProfileProps) => {
         following={following.totalCount}
         gists={gists.totalCount}
       />
+      {repositories.totalCount > 0 && (
+        <div className="grid md:grid-cols-2 gap-4">
+          <ForkedRepos repositories={repositories.nodes} />
+        </div>
+      )}
     </div>
   );
 };
